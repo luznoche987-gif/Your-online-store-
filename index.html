@@ -1,0 +1,2742 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shopper For clothes  - متجر إلكتروني للملابس </title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        /* تنسيقات عامة */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --header-height: 3.5rem;
+            --title-color: hsl(250, 8%, 15%);
+            --text-color: hsl(250, 8%, 35%);
+            --body-color: hsl(250, 60%, 98%);
+            --container-color: #FFFFFF;
+            --shadow: hsla(0, 0%, 15%, .1);
+            --scrollbar-color: hsl(250, 12%, 90%);
+            --scrollbar-thumb-color: hsl(250, 12%, 80%);
+            --first-color: hsl(0, 88%, 61%);
+            --first-color-alt: hsl(0, 88%, 58%);
+            --body-font: 'Tajawal', sans-serif;
+            --biggest-font-size: 4rem;
+            --h1-font-size: 2.25rem;
+            --h2-font-size: 1.5rem;
+            --h3-font-size: 1.25rem;
+            --normal-font-size: 1rem;
+            --small-font-size: .875rem;
+            --smaller-font-size: .813rem;
+            --font-medium: 500;
+            --font-bold: 600;
+            --mb0-5: .5rem;
+            --mb0-75: .75rem;
+            --mb1: 1rem;
+            --mb1-5: 1.5rem;
+            --mb2: 2rem;
+            --mb2-5: 2.5rem;
+            --mb3: 3rem;
+            --z-tooltip: 10;
+            --z-fixed: 100;
+        }
+
+        /* وضع الليل */
+        body.dark-theme {
+            --title-color: hsl(250, 8%, 95%);
+            --text-color: hsl(250, 8%, 75%);
+            --body-color: hsl(250, 16%, 12%);
+            --container-color: hsl(250, 16%, 18%);
+            --shadow: hsla(0, 0%, 5%, .2);
+            --scrollbar-color: hsl(250, 12%, 20%);
+            --scrollbar-thumb-color: hsl(250, 12%, 30%);
+        }
+
+        /* زر تبديل الوضع */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--container-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle i {
+            font-size: 1.25rem;
+            color: var(--title-color);
+        }
+
+        .dark-theme .theme-toggle {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        @media screen and (max-width: 992px) {
+            :root {
+                --biggest-font-size: 2rem;
+                --h1-font-size: 1.5rem;
+                --h2-font-size: 1.25rem;
+                --h3-font-size: 1rem;
+                --normal-font-size: .938rem;
+                --small-font-size: .813rem;
+                --smaller-font-size: .75rem;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body, input, button {
+            font-family: var(--body-font);
+            font-size: var(--normal-font-size);
+        }
+
+        button, input {
+            border: none;
+            outline: none;
+        }
+
+        body {
+            background-color: var(--body-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--title-color);
+            font-weight: var(--font-medium);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .section {
+            padding: 7rem 0 2rem;
+        }
+
+        .section-title, .breadcrumb-title, .breadcrumb-subtitle {
+            text-align: center;
+        }
+
+        .section-title, .breadcrumb-title {
+            font-size: var(--h1-font-size);
+        }
+
+        .section-title, .breadcrumb-subtitle {
+            margin-bottom: var(--mb3);
+        }
+
+        .container {
+            max-width: 968px;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 0 var(--mb1-5);
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .button {
+            display: inline-block;
+            background: var(--first-color);
+            color: #FFFFFF;
+            padding: 1rem 1.75rem;
+            border-radius: .5rem;
+            font-weight: var(--font-medium);
+            transition: .3s;
+        }
+
+        .button:hover {
+            background: var(--first-color-alt);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-icon {
+            font-size: 1.25rem;
+        }
+
+        .button-link {
+            color: var(--title-color);
+        }
+
+        .button-flex {
+            display: inline-flex;
+            align-items: center;
+            column-gap: .5rem;
+        }
+
+        .swiper-pagination {
+            position: initial !important;
+            margin-top: var(--mb2-5);
+        }
+
+        .swiper-pagination-bullet {
+            width: 5px !important;
+            height: 5px !important;
+            background: var(--title-color) !important;
+            opacity: 1 !important;
+        }
+
+        .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+            margin: 0 .5rem !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            width: 1.5rem !important;
+            height: 5px !important;
+            border-radius: .5rem !important;
+            background: var(--first-color) !important;
+        }
+
+        /* الهيدر */
+        .header {
+            width: 100%;
+            background: transparent;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: var(--z-fixed);
+            transition: .4s;
+        }
+
+        .nav {
+            height: calc(var(--header-height) + 1.5rem);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            column-gap: 3rem;
+        }
+
+        .login-toggle, .nav-logo, .nav-toggle, .nav-shop, .nav-close {
+            color: var(--title-color);
+        }
+
+        .nav-logo {
+            text-transform: lowercase;
+            font-weight: var(--font-bold);
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            column-gap: .25rem;
+        }
+
+        .nav-logo-icon {
+            font-size: 1.25rem;
+        }
+
+        .nav-btns {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem;
+            margin-right: auto;
+        }
+
+        .nav-toggle, .login-toggle, .nav-shop {
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .nav-toggle:hover, .login-toggle:hover, .nav-shop:hover {
+            color: var(--first-color);
+        }
+
+        .nav-list {
+            display: flex;
+            align-items: center;
+            column-gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--title-color);
+            font-weight: var(--font-medium);
+            font-size: var(--normal-font-size);
+            transition: .3s;
+        }
+
+        .nav-link:hover {
+            color: var(--first-color);
+        }
+
+        .nav-close {
+            font-size: 2rem;
+            position: absolute;
+            top: 0.9rem;
+            left: 1.25rem;
+            cursor: pointer;
+        }
+
+        .nav-toggle, .nav-close {
+            display: none;
+        }
+
+        .active-link {
+            position: relative;
+            color: var(--first-color);
+        }
+
+        .active-link::before {
+            content: '';
+            position: absolute;
+            bottom: -.75rem;
+            right: 45%;
+            width: 5px;
+            height: 5px;
+            background: var(--first-color);
+            border-radius: 50%;
+        }
+
+        .scroll-header {
+            background-color: var(--body-color);
+            box-shadow: 0 1px 4px var(--shadow);
+        }
+
+        /* السلة */
+        .cart {
+            position: fixed;
+            background-color: var(--body-color);
+            z-index: var(--z-fixed);
+            width: 420px;
+            box-shadow: 2px 0 4px var(--shadow);
+            height: 100%;
+            top: 0;
+            left: -100%;
+            padding: 3.5rem 2rem;
+            transition: .4s;
+            overflow-y: auto;
+        }
+
+        .cart-title-center {
+            font-size: var(--h2-font-size);
+            text-align: center;
+            margin-bottom: var(--mb3);
+        }
+
+        .cart-close {
+            font-size: 2rem;
+            color: var(--title-color);
+            position: absolute;
+            top: 1.25rem;
+            left: 0.9rem;
+            cursor: pointer;
+        }
+
+        .cart-container {
+            display: grid;
+            row-gap: 1.5rem;
+        }
+
+        .cart-card {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem;
+        }
+
+        .cart-box {
+            background-color: var(--container-color);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            border-radius: .5rem;
+        }
+
+        .cart-img {
+            width: 85px;
+        }
+
+        .cart-title {
+            font-size: var(--normal-font-size);
+            margin-bottom: var(--mb0-5);
+        }
+
+        .cart-price {
+            display: block;
+            font-size: var(--small-font-size);
+            color: var(--first-color);
+            margin-bottom: var(--mb1-5);
+        }
+
+        .cart-amount, .cart-amount-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-amount {
+            column-gap: 3rem;
+        }
+
+        .cart-amount-content {
+            column-gap: 1rem;
+        }
+
+        .cart-amount-box {
+            display: inline-flex;
+            padding: 0.25rem;
+            background: var(--container-color);
+            cursor: pointer;
+            border-radius: .25rem;
+        }
+
+        .cart-amount-trash {
+            font-size: 1.15rem;
+            color: var(--first-color);
+            cursor: pointer;
+        }
+
+        .cart-prices {
+            margin-top: 6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--scrollbar-color);
+        }
+
+        .cart-prices-item, .cart-prices-total {
+            color: var(--title-color);
+        }
+
+        .cart-prices-item {
+            font-size: var(--small-font-size);
+        }
+
+        .cart-prices-total {
+            font-size: var(--h3-font-size);
+            font-weight: var(--font-medium);
+        }
+
+        .show-cart {
+            left: 0;
+        }
+
+        /* تسجيل الدخول */
+        .login {
+            position: fixed;
+            background-color: var(--body-color);
+            z-index: var(--z-fixed);
+            width: 420px;
+            box-shadow: 2px 0 4px var(--shadow);
+            height: 100%;
+            top: 0;
+            left: -100%;
+            padding: 3.5rem 2rem;
+            transition: .4s;
+        }
+
+        .login-title-center {
+            font-size: var(--h2-font-size);
+            text-align: center;
+            margin-bottom: var(--mb3);
+        }
+
+        .login-close {
+            font-size: 2rem;
+            color: var(--title-color);
+            position: absolute;
+            top: 1.25rem;
+            left: 0.9rem;
+            cursor: pointer;
+        }
+
+        .login-form {
+            row-gap: 1.5rem;
+        }
+
+        .login-content {
+            background-color: var(--container-color);
+            border-radius: .5rem;
+            padding: 0.75rem 1rem .25rem;
+        }
+
+        .login-label {
+            font-size: var(--small-font-size);
+            color: var(--title-color);
+        }
+
+        .login-input {
+            width: 100%;
+            background: var(--container-color);
+            color: var(--text-color);
+            font-size: var(--normal-font-size);
+            padding: 0.25rem .5rem .5rem 0;
+        }
+
+        .signup {
+            color: var(--title-color);
+            font-size: var(--small-font-size);
+            font-weight: var(--font-medium);
+            text-align: center;
+        }
+
+        .signup a {
+            color: var(--first-color);
+        }
+
+        .show-login {
+            left: 0;
+        }
+
+        /* الصفحة الرئيسية */
+        .home-content {
+            padding: 9rem 0 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 3rem;
+            align-items: center;
+        }
+
+        .home-group {
+            display: grid;
+            position: relative;
+            padding-top: 2rem;
+        }
+
+        .home-img {
+            height: 420px;
+            transform: translateY(-3rem);
+            justify-self: center;
+        }
+
+        .home-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--title-color);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 15%;
+            right: 45%;
+        }
+
+        .home-indicator::after {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 75px;
+            background: var(--title-color);
+            top: 0;
+            left: 45%;
+        }
+
+        .home-details-img {
+            position: absolute;
+            bottom: 0;
+            left: 58%;
+            background: var(--container-color);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-details-title, .home-details-subtitle {
+            display: block;
+            font-size: var(--small-font-size);
+            text-align: left;
+        }
+
+        .home-subtitle {
+            font-size: var(--h3-font-size);
+            text-transform: uppercase;
+            margin-bottom: var(--mb1);
+            color: var(--first-color);
+        }
+
+        .home-title {
+            font-size: var(--biggest-font-size);
+            font-weight: var(--font-bold);
+            line-height: 109%;
+            margin-bottom: var(--mb1-5);
+        }
+
+        .home-description {
+            margin-bottom: var(--mb2-5);
+            padding-left: 2rem;
+        }
+
+        .home-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        /* قسم الخصم */
+        .discount-container {
+            grid-template-columns: repeat(2, max-content);
+            justify-content: center;
+            align-items: center;
+            column-gap: 7rem;
+            background-color: var(--container-color);
+            padding: 3rem 0;
+            border-radius: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .discount-img {
+            width: 200px;
+        }
+
+        .discount-data {
+            padding-right: 6rem;
+            text-align: center;
+        }
+
+        .discount-title {
+            font-size: var(--h2-font-size);
+            margin-bottom: var(--mb2);
+        }
+
+        /* المنتجات الجديدة */
+        .new-container {
+            padding-top: 1rem;
+        }
+
+        .new-img {
+            width: 150px;
+            margin-bottom: var(--mb1);
+            transition: .3s;
+        }
+
+        .new-content {
+            position: relative !important;
+            background-color: var(--container-color);
+            width: 310px;
+            padding: 2rem 0;
+            border-radius: 1rem;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: .3s;
+        }
+
+        .new-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .new-tag {
+            position: absolute;
+            top: 8%;
+            right: 8%;
+            background-color: var(--first-color);
+            color: #FFFFFF;
+            font-size: var(--small-font-size);
+            padding: 0.25rem .5rem;
+            border-radius: .25rem;
+            font-weight: var(--font-bold);
+        }
+
+        .new-title {
+            font-size: var(--h3-font-size);
+            font-weight: var(--font-medium);
+        }
+
+        .new-subtitle {
+            display: block;
+            font-size: var(--small-font-size);
+            margin-bottom: var(--mb1);
+        }
+
+        .new-prices {
+            display: inline-flex;
+            align-items: center;
+            column-gap: .5rem;
+        }
+
+        .new-price {
+            font-weight: var(--font-medium);
+            color: var(--title-color);
+        }
+
+        .new-discount {
+            color: var(--first-color);
+            font-size: var(--smaller-font-size);
+            text-decoration: line-through;
+            font-weight: var(--font-medium);
+        }
+
+        .new-button {
+            display: inline-flex;
+            padding: 0.5rem;
+            border-radius: .25rem .25rem .25rem .75rem;
+            position: absolute;
+            bottom: 0;
+            left: -3rem;
+            background: var(--first-color);
+            color: white;
+            transition: .4s;
+        }
+
+        .new-icon {
+            font-size: 1.25rem;
+        }
+
+        .new-content:hover .new-img {
+            transform: translateY(-0.5rem);
+        }
+
+        .new-content:hover .new-button {
+            left: 0;
+        }
+
+        /* قسم الزي الشعبي اليمني */
+        .traditional-section {
+            padding: 4rem 0;
+            background-color: var(--body-color);
+        }
+
+        .traditional-header {
+            text-align: center;
+            margin-bottom: var(--mb3);
+        }
+
+        .traditional-title {
+            font-size: var(--h1-font-size);
+            color: var(--title-color);
+            margin-bottom: var(--mb1);
+        }
+
+        .traditional-subtitle {
+            color: var(--text-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .traditional-container {
+            padding-top: 1rem;
+        }
+
+        .traditional-content {
+            position: relative !important;
+            background-color: var(--container-color);
+            width: 280px;
+            padding: 2rem 0;
+            border-radius: 1rem;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: .3s;
+            margin: 0 auto;
+        }
+
+        .traditional-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .traditional-tag {
+            position: absolute;
+            top: 8%;
+            right: 8%;
+            background-color: var(--first-color);
+            color: #FFFFFF;
+            font-size: var(--small-font-size);
+            padding: 0.25rem .5rem;
+            border-radius: .25rem;
+            font-weight: var(--font-bold);
+        }
+
+        .traditional-img {
+            width: 150px;
+            margin-bottom: var(--mb1);
+            transition: .3s;
+        }
+
+        .traditional-title-item {
+            font-size: var(--h3-font-size);
+            font-weight: var(--font-medium);
+            margin-bottom: var(--mb0-5);
+        }
+
+        .traditional-subtitle-item {
+            display: block;
+            font-size: var(--small-font-size);
+            margin-bottom: var(--mb1);
+            color: var(--text-color);
+        }
+
+        .traditional-prices {
+            display: inline-flex;
+            align-items: center;
+            column-gap: .5rem;
+            margin-bottom: var(--mb1);
+        }
+
+        .traditional-price {
+            font-weight: var(--font-medium);
+            color: var(--title-color);
+        }
+
+        .traditional-discount {
+            color: var(--first-color);
+            font-size: var(--smaller-font-size);
+            text-decoration: line-through;
+            font-weight: var(--font-medium);
+        }
+
+        .traditional-button {
+            display: inline-flex;
+            padding: 0.5rem;
+            border-radius: .25rem .25rem .25rem .75rem;
+            position: absolute;
+            bottom: 0;
+            left: -3rem;
+            background: var(--first-color);
+            color: white;
+            transition: .4s;
+        }
+
+        .traditional-icon {
+            font-size: 1.25rem;
+        }
+
+        .traditional-content:hover .traditional-img {
+            transform: translateY(-0.5rem);
+        }
+
+        .traditional-content:hover .traditional-button {
+            left: 0;
+        }
+
+        .traditional-cta {
+            text-align: center;
+            margin-top: var(--mb3);
+        }
+
+        /* تخصيص Swiper للزي الشعبي */
+        .traditional-swiper {
+            padding: 1rem 0 3rem;
+        }
+
+        .traditional-swiper .swiper-pagination {
+            position: initial !important;
+            margin-top: var(--mb2);
+        }
+
+        /* أقسام الزي اليمني المنفصلة */
+        .yemeni-category {
+            margin: 4rem 0;
+        }
+
+        .yemeni-category-header {
+            text-align: center;
+            margin-bottom: var(--mb2);
+        }
+
+        .yemeni-category-title {
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+            margin-bottom: var(--mb1);
+            position: relative;
+            display: inline-block;
+        }
+
+        .yemeni-category-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: var(--first-color);
+            bottom: -8px;
+            right: 25%;
+            border-radius: 2px;
+        }
+
+        .yemeni-category-description {
+            color: var(--text-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* خطوات الطلب */
+        .steps-bg {
+            background-color: var(--container-color);
+            padding: 3.5rem 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .steps-container {
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 2rem;
+            padding-top: 1rem;
+        }
+
+        .steps-card {
+            background-color: var(--body-color);
+            padding: 2.5rem 3rem 2rem 1.5rem;
+            border-radius: 1rem;
+            transition: .3s;
+        }
+
+        .steps-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .steps-card-number {
+            display: inline-block;
+            background-color: var(--first-color);
+            color: #FFFFFF;
+            padding: 0.5rem .75rem;
+            border-radius: .25rem;
+            font-size: var(--h2-font-size);
+            margin-bottom: var(--mb1-5);
+            transition: .3s;
+        }
+
+        .steps-card-title {
+            font-size: var(--normal-font-size);
+            margin-bottom: var(--mb0-5);
+        }
+
+        .steps-card-description {
+            font-size: var(--small-font-size);
+        }
+
+        .steps-card:hover .steps-card-number {
+            transform: translateY(-0.25rem);
+        }
+
+        /* النشرة البريدية */
+        .newsletter-container {
+            display: grid;
+            grid-template-columns: .5fr;
+            justify-content: center;
+            background: var(--container-color);
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .newsletter-description {
+            padding: 0 3rem;
+            text-align: center;
+            margin-bottom: var(--mb1-5);
+        }
+
+        .newsletter-form {
+            background-color: var(--body-color);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            border-radius: .75rem;
+        }
+
+        .newsletter-input {
+            width: 70%;
+            padding: 0 .5rem;
+            background: none;
+            color: var(--title-color);
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--text-color);
+        }
+
+        /* الفوتر */
+        .footer {
+            position: relative;
+            overflow: hidden;
+            background: var(--container-color);
+            padding-top: 4rem;
+        }
+
+        .footer-container {
+            grid-template-columns: repeat(4, 1fr);
+            justify-content: center;
+            column-gap: 1rem;
+        }
+
+        .footer-logo {
+            color: var(--title-color);
+            text-transform: lowercase;
+            font-weight: var(--font-bold);
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            column-gap: .25rem;
+            margin-bottom: var(--mb1);
+        }
+
+        .footer-logo-icon {
+            font-size: 1rem;
+        }
+
+        .footer-description {
+            margin-bottom: var(--mb2-5);
+        }
+
+        .footer-social {
+            display: flex;
+            column-gap: .75rem;
+        }
+
+        .footer-social-link {
+            display: inline-flex;
+            background-color: var(--body-color);
+            padding: 0.25rem;
+            color: var(--title-color);
+            font-size: 1rem;
+            border-radius: .25rem;
+            transition: .3s;
+        }
+
+        .footer-social-link:hover {
+            background-color: var(--first-color);
+            color: #FFFFFF;
+        }
+
+        .footer-title {
+            font-size: var(--h3-font-size);
+            margin-bottom: var(--mb1);
+        }
+
+        .footer-links {
+            display: grid;
+            row-gap: .35rem;
+        }
+
+        .footer-link {
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            transition: .3s;
+        }
+
+        .footer-link:hover {
+            color: var(--first-color);
+        }
+
+        .footer-copy {
+            display: block;
+            text-align: center;
+            font-size: var(--smaller-font-size);
+            margin-top: 6rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--scrollbar-color);
+        }
+
+        /* المطور */
+        .developer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+        }
+
+        .developer a {
+            color: var(--first-color);
+            font-weight: var(--font-medium);
+        }
+
+        /* زر التمرير للأعلى */
+        .scrollUp {
+            position: fixed;
+            left: 1rem;
+            bottom: -30%;
+            background: var(--first-color);
+            border-radius: .4rem;
+            display: inline-flex;
+            padding: 0.25rem;
+            z-index: var(--z-tooltip);
+            opacity: .8;
+            transition: .4s;
+        }
+
+        .scrollUp:hover {
+            opacity: 1;
+        }
+
+        .scrollup-icon {
+            font-size: 1.5rem;
+            color: #FFFFFF;
+        }
+
+        .show-scroll {
+            bottom: 3rem;
+        }
+
+        /* شارة السلة */
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: var(--first-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .nav-shop {
+            position: relative;
+        }
+
+        /* السلة الفارغة */
+        .cart-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .cart-empty i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--first-color);
+        }
+
+        .cart-empty h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-empty p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* الإشعارات */
+        .notification {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 10000;
+            max-width: 350px;
+            animation: slideInLeft 0.3s ease;
+            border-right: 4px solid #ccc;
+        }
+
+        .notification-success {
+            border-right-color: #4CAF50;
+        }
+
+        .notification-error {
+            border-right-color: #F44336;
+        }
+
+        .notification-info {
+            border-right-color: #2196F3;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* شعار الترحيب */
+        .welcome-logo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .welcome-logo.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .welcome-content {
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--first-color);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-developer {
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            color: #ccc;
+        }
+
+        .welcome-developer a {
+            color: var(--first-color);
+        }
+
+        /* شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 0.6rem;
+            background: var(--scrollbar-color);
+            border-radius: .5rem;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb-color);
+            border-radius: .5rem;
+        }
+
+        /* استعلامات الوسائط */
+        @media screen and (max-width: 1200px) {
+            .home-img {
+                height: 400px;
+            }
+        }
+
+        @media screen and (max-width: 992px) {
+            .container {
+                margin-right: var(--mb1-5);
+                margin-left: var(--mb1-5);
+            }
+
+            .section-title {
+                font-size: var(--h2-font-size);
+                margin-bottom: var(--mb2);
+            }
+
+            .home-content {
+                padding: 8rem 0 2rem;
+            }
+
+            .home-img {
+                height: 300px;
+                transform: translateY(0);
+            }
+
+            .home-indicator {
+                bottom: initial;
+                right: initial;
+                top: 7rem;
+                left: 2rem;
+            }
+
+            .home-indicator::after {
+                top: -3rem;
+                height: 48px;
+            }
+
+            .home-details-img {
+                left: 0.5rem;
+                bottom: initial;
+            }
+
+            .home-description {
+                padding-left: 0;
+            }
+
+            .new-content {
+                width: 242px;
+                padding: 2rem 0 1.5rem 0;
+            }
+
+            .new-img {
+                width: 120px;
+            }
+
+            .new-img, .new-subtitle {
+                margin-bottom: var(--mb0-5);
+            }
+
+            .new-title {
+                font-size: var(--normal-font-size);
+            }
+
+            .traditional-content {
+                width: 242px;
+                padding: 2rem 0 1.5rem 0;
+            }
+
+            .traditional-img {
+                width: 120px;
+            }
+
+            .steps-bg {
+                padding: 3rem 2rem 2rem;
+            }
+
+            .steps-container {
+                grid-template-columns: repeat(2, 1fr);
+                row-gap: 2rem;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media screen and (max-width: 776px) {
+            body {
+                margin: var(--header-height) 0 0 0;
+            }
+
+            .section {
+                padding: 4.5rem 0 2rem;
+            }
+
+            .nav {
+                height: var(--header-height);
+            }
+
+            .nav-menu {
+                position: fixed;
+                background-color: var(--body-color);
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                padding: 6rem 2rem 3.5rem;
+                transition: .5s;
+            }
+
+            .nav-list {
+                flex-direction: column;
+                row-gap: 2rem;
+            }
+
+            .nav-close, .nav-toggle {
+                display: block;
+            }
+
+            .home-content {
+                padding: 0;
+                grid-template-columns: 1fr;
+                row-gap: 1rem;
+            }
+
+            .show-menu {
+                left: 0;
+            }
+
+            .home-img {
+                height: 250px;
+            }
+
+            .home-title {
+                margin-bottom: var(--mb1);
+            }
+
+            .home-description {
+                margin-bottom: var(--mb1-5);
+            }
+
+            .discount-container {
+                grid-template-columns: 1fr;
+                row-gap: 1.25rem;
+                padding: 2.5rem 0 1.5rem;
+                border-radius: 1rem;
+            }
+
+            .discount-img {
+                justify-self: center;
+                order: 1;
+            }
+
+            .discount-data {
+                padding-right: 0;
+            }
+
+            .newsletter-container {
+                grid-template-columns: .7fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                row-gap: 2rem;
+                justify-self: center;
+                align-items: center;
+            }
+
+            .footer-content {
+                text-align: center;
+            }
+
+            .footer-social {
+                justify-content: center;
+                align-items: center;
+            }
+
+            .footer-copy {
+                margin-top: 4.5rem;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-bg {
+                padding: 3rem 2rem 2rem;
+            }
+
+            .newsletter-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login, .cart {
+                width: 100%;
+            }
+
+            .home-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 330px) {
+            .container {
+                margin-right: var(--mb1);
+                margin-left: var(--mb1);
+            }
+
+            .nav {
+                column-gap: 0;
+            }
+
+            .home-img {
+                height: 200px;
+            }
+
+            .home-buttons {
+                flex-direction: column;
+                width: max-content;
+                row-gap: 1rem;
+            }
+
+            .steps-bg {
+                padding: 2rem 1rem;
+            }
+
+            .steps-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شعار الترحيب -->
+    <div class="welcome-logo" id="welcome-logo">
+        <div class="welcome-content">
+            <h1 class="welcome-title">مرحباً بك في E-Shopper clothes </h1>
+            <p class="welcome-subtitle">متجرك الإلكتروني الملابس و للتراث اليمني الأصيل</p>
+            <div class="welcome-developer">
+                تم التطوير بواسطة <a href="#">عبد الوهاب عبد الواحد الريمي</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- الهيدر -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav-logo">
+                <i class='bx bxs-shopping-bags nav-logo-icon'></i> E-Shopper For clothes 
+            </a>
+
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link active-link">الرئيسية</a></li>
+                    <li class="nav-item"><a href="shop.html" class="nav-link">المتجر</a></li>
+                    <li class="nav-item"><a href="cart.html" class="nav-link">السلة</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link">المدونة</a></li>
+                    <li class="nav-item"><a href="faq.html" class="nav-link">الأسئلة الشائعة</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">اتصل بنا</a></li>
+                </ul>
+
+                <div class="nav-close" id="nav-close">
+                    <i class="bx bx-x"></i>
+                </div>
+            </div>
+
+            <div class="nav-btns">
+                <!-- زر تبديل الوضع -->
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class='bx bx-moon'></i>
+                </div>
+                
+                <div class="login-toggle" id="login-button"><i class='bx bx-user'></i></div>
+                <div class="nav-shop" id="cart-shop">
+                    <i class='bx bx-shopping-bag'></i>
+                    <span class="cart-badge">3</span>
+                </div>
+                <div class="nav-toggle" id="nav-toggle"><i class='bx bx-grid-alt'></i></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- سلة التسوق -->
+    <div class="cart" id="cart">
+        <i class='bx bx-x cart-close' id="cart-close"></i>
+
+        <h2 class="cart-title-center">سلة التسوق</h2>
+
+        <div class="cart-container">
+            <article class="cart-card">
+                <div class="cart-box">
+                    <img src="https://i.postimg.cc/hjwgkCbL/cart-1.png" alt="" class="cart-img">
+                </div>
+
+                <div class="cart-details">
+                    <h3 class="cart-title">سترة واقية من الرياح</h3>
+                    <span class="cart-price">$12</span>
+
+                    <div class="cart-amount">
+                        <div class="cart-amount-content">
+                            <span class="cart-amount-box"><i class='bx bx-minus'></i></span>
+                            <span class="cart-amount-number">1</span>
+                            <span class="cart-amount-box"><i class='bx bx-plus'></i></span>
+                        </div>
+                        <i class='bx bx-trash-alt cart-amount-trash'></i>
+                    </div>
+                </div>
+            </article>
+
+            <article class="cart-card">
+                <div class="cart-box">
+                    <img src="https://i.postimg.cc/J0kK1QSV/cart-2.png" alt="" class="cart-img">
+                </div>
+
+                <div class="cart-details">
+                    <h3 class="cart-title">هودي كارديجان</h3>
+                    <span class="cart-price">$16</span>
+
+                    <div class="cart-amount">
+                        <div class="cart-amount-content">
+                            <span class="cart-amount-box"><i class='bx bx-minus'></i></span>
+                            <span class="cart-amount-number">1</span>
+                            <span class="cart-amount-box"><i class='bx bx-plus'></i></span>
+                        </div>
+                        <i class='bx bx-trash-alt cart-amount-trash'></i>
+                    </div>
+                </div>
+            </article>
+
+            <article class="cart-card">
+                <div class="cart-box">
+                    <img src="https://i.postimg.cc/D0LdVwb7/cart-3.png" alt="" class="cart-img">
+                </div>
+
+                <div class="cart-details">
+                    <h3 class="cart-title">تي شيرت كارتون</h3>
+                    <span class="cart-price">$10</span>
+
+                    <div class="cart-amount">
+                        <div class="cart-amount-content">
+                            <span class="cart-amount-box"><i class='bx bx-minus'></i></span>
+                            <span class="cart-amount-number">1</span>
+                            <span class="cart-amount-box"><i class='bx bx-plus'></i></span>
+                        </div>
+                        <i class='bx bx-trash-alt cart-amount-trash'></i>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="cart-prices">
+            <span class="cart-prices-item">3 منتجات</span>
+            <span class="cart-prices-total">$38</span>
+        </div>
+    </div>
+
+    <!-- تسجيل الدخول -->
+    <div class="login" id="login">
+        <i class='bx bx-x login-close' id="login-close"></i>
+
+        <h2 class="login-title-center">تسجيل الدخول</h2>
+
+        <form action="" class="login-form grid">
+            <div class="login-content">
+                <label for="" class="login-label">البريد الإلكتروني</label>
+                <input type="email" class="login-input">
+            </div>
+
+            <div class="login-content">
+                <label for="" class="login-label">كلمة المرور</label>
+                <input type="password" class="login-input">
+            </div>
+
+            <div>
+                <a href="#" class="button">تسجيل الدخول</a>
+            </div>
+
+            <div>
+                <p class="signup">لست عضواً؟ <a href="registration.html">سجل الآن</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main">
+        <!-- القسم الرئيسي -->
+        <section class="home container">
+            <div class="swiper home-swiper">
+                <div class="swiper-wrapper">
+                    <section class="swiper-slide">
+                        <div class="home-content grid">
+                            <div class="home-group">
+                                <img src="https://i.postimg.cc/FHrrbY93/slide-2.png" alt="" class="home-img">
+
+                                <div class="home-indicator"></div>
+
+                                <div class="home-details-img">
+                                    <h4 class="home-details-title">الكارديجان</h4>
+                                    <span class="home-details-subtitle">صوف</span>
+                                </div>
+                            </div>
+
+                            <div class="home-data">
+                                <h3 class="home-subtitle">#1 المنتج الأكثر رواجاً</h3>
+                                <h1 class="home-title">عبّر عن نفسك</h1>
+                                <p class="home-description">اصنع فرديتك. مصنوع يدوياً بشغف، لأولئك الذين يجرؤون على أن يكونوا مختلفين</p>
+
+                                <div class="home-buttons">
+                                    <a href="details.html" class="button">اشتري الآن</a>
+                                    <a href="details.html" class="button-link button-flex">عرض التفاصيل <i class="bx bx-left-arrow-alt button-icon"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="swiper-slide">
+                        <div class="home-content grid">
+                            <div class="home-group">
+                                <img src="https://i.postimg.cc/MTF55f2T/slide-3.png" alt="" class="home-img">
+
+                                <div class="home-indicator"></div>
+
+                                <div class="home-details-img">
+                                    <h4 class="home-details-title">جكويزي</h4>
+                                    <span class="home-details-subtitle">بدلة تزلج</span>
+                                </div>
+                            </div>
+
+                            <div class="home-data">
+                                <h3 class="home-subtitle">#2 أفضل ثنائي</h3>
+                                <h1 class="home-title">خريف شتاء <br> 2025</h1>
+                                <p class="home-description">مستقبل الموضة هنا، حيث تلتقي الدفء مع الأناقة. امتلك الموسم. امتلك المظهر</p>
+
+                                <div class="home-buttons">
+                                    <a href="details.html" class="button">اشتري الآن</a>
+                                    <a href="details.html" class="button-link button-flex">عرض التفاصيل <i class="bx bx-left-arrow-alt button-icon"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="swiper-slide">
+                        <div class="home-content grid">
+                            <div class="home-group">
+                                <img src="https://i.postimg.cc/jjk3gFyt/slide-1.png" alt="" class="home-img">
+
+                                <div class="home-indicator"></div>
+
+                                <div class="home-details-img">
+                                    <h4 class="home-details-title">جوري</h4>
+                                    <span class="home-details-subtitle">سحاب</span>
+                                </div>
+                            </div>
+
+                            <div class="home-data">
+                                <h3 class="home-subtitle">#3 منتج رائج</h3>
+                                <h1 class="home-title">خصم 20% <br> على كل شيء</h1>
+                                <p class="home-description">لا تفوت الفرصة! خصم 20% على كل شيء لفترة محدودة</p>
+
+                                <div class="home-buttons">
+                                    <a href="details.html" class="button">اشتري الآن</a>
+                                    <a href="details.html" class="button-link button-flex">عرض التفاصيل <i class="bx bx-left-arrow-alt button-icon"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <!-- قسم الخصم -->
+        <section class="discount section">
+            <div class="discount-container container grid">
+                <img src="https://i.postimg.cc/K8d4FZPW/discount.png" alt="" class="discount-img">
+
+                <div class="discount-data">
+                    <h2 class="discount-title">خصم 50% <br> على المنتجات الجديدة</h2>
+                    <a href="#" class="button">اذهب إلى الجديد</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- المنتجات الجديدة -->
+        <section class="new section">
+            <h2 class="section-title">المنتجات الجديدة</h2>
+
+            <div class="new-container container">
+                <div class="swiper new-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="new-content swiper-slide">
+                            <div class="new-tag">جديد</div>
+                            <img src="https://i.postimg.cc/2SNPfMqw/new-1.png" alt="" class="new-img">
+                            <h3 class="new-title">سترة واقية من الرياح</h3>
+                            <span class="new-subtitle">اكسسوار</span>
+
+                            <div class="new-prices">
+                                <span class="new-price">$14.99</span>
+                                <span class="new-discount">$29.99</span>
+                            </div>
+
+                            <a href="details.html" class="button new-button"><i class="bx bx-cart-alt new-icon"></i></a>
+                        </div>
+
+                        <div class="new-content swiper-slide">
+                            <div class="new-tag">جديد</div>
+                            <img src="https://i.postimg.cc/QtRrKttL/new-2.png" alt="" class="new-img">
+                            <h3 class="new-title">سحاب اير جوردان</h3>
+                            <span class="new-subtitle">اكسسوار</span>
+
+                            <div class="new-prices">
+                                <span class="new-price">$11.99</span>
+                                <span class="new-discount">$21.99</span>
+                            </div>
+
+                            <a href="details.html" class="button new-button"><i class="bx bx-cart-alt new-icon"></i></a>
+                        </div>
+
+                        <div class="new-content swiper-slide">
+                            <div class="new-tag">جديد</div>
+                            <img src="https://i.postimg.cc/bNkVZPJK/new-3.png" alt="" class="new-img">
+                            <h3 class="new-title">سترة فراء</h3>
+                            <span class="new-subtitle">اكسسوار</span>
+
+                            <div class="new-prices">
+                                <span class="new-price">$4.99</span>
+                                <span class="new-discount">$9.99</span>
+                            </div>
+
+                            <a href="details.html" class="button new-button"><i class="bx bx-cart-alt new-icon"></i></a>
+                        </div>
+
+                        <div class="new-content swiper-slide">
+                            <div class="new-tag">جديد</div>
+                            <img src="https://i.postimg.cc/90TbwPWG/new-4.png" alt="" class="new-img">
+                            <h3 class="new-title">سترة صوف</h3>
+                            <span class="new-subtitle">اكسسوار</span>
+
+                            <div class="new-prices">
+                                <span class="new-price">$24.99</span>
+                                <span class="new-discount">$44.99</span>
+                            </div>
+
+                            <a href="details.html" class="button new-button"><i class="bx bx-cart-alt new-icon"></i></a>
+                        </div>
+
+                        <div class="new-content swiper-slide">
+                            <div class="new-tag">جديد</div>
+                            <img src="https://i.postimg.cc/GhFzcjgR/new-5.png" alt="" class="new-img">
+                            <h3 class="new-title">بلوزة زهرية</h3>
+                            <span class="new-subtitle">اكسسوار</span>
+
+                            <div class="new-prices">
+                                <span class="new-price">$7.99</span>
+                                <span class="new-discount">$14.99</span>
+                            </div>
+
+                            <a href="details.html" class="button new-button"><i class="bx bx-cart-alt new-icon"></i></a>
+                        </div>
+
+                        <div class="new-content swiper-slide">
+                            <div class="new-tag">جديد</div>
+                            <img src="https://i.postimg.cc/MH8R4CSQ/new-6.png" alt="" class="new-img">
+                            <h3 class="new-title">سترة نايك</h3>
+                            <span class="new-subtitle">اكسسوار</span>
+
+                            <div class="new-prices">
+                                <span class="new-price">$5.99</span>
+                                <span class="new-discount">$12.99</span>
+                            </div>
+
+                            <a href="details.html" class="button new-button"><i class="bx bx-cart-alt new-icon"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- أقسام الزي اليمني المنفصلة -->
+        
+        <!-- قسم المعوز اليمني -->
+        <section class="yemeni-category section">
+            <div class="container">
+                <div class="yemeni-category-header">
+                    <h2 class="yemeni-category-title">المعوز اليمني</h2>
+                    <p class="yemeni-category-description">اكتشف جمال وعراقة المعوز اليمني التقليدي بأجود الخامات وأفضل التصاميم</p>
+                </div>
+
+                <div class="traditional-container">
+                    <div class="swiper traditional-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">معوز يمني</div>
+                                <img src="https://yemenusa.com/cdn/shop/files/IMG_9049_1024x1024.jpg?v=1710833093" alt="معوز يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">معوز يمني أصلي</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$45.99</span>
+                                    <span class="traditional-discount">$60.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">معوز يمني</div>
+                                <img src="https://www.movehalal.com/cdn/shop/products/IMG_7571.jpg?v=1619417746" alt="معوز يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">معوز يمني مطرز</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$52.99</span>
+                                    <span class="traditional-discount">$68.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">معوز يمني</div>
+                                <img src="https://sezyshop.com/wp-content/uploads/2023/10/ez04.jpg" alt="معوز يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">معوز يمني كلاسيكي</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$39.99</span>
+                                    <span class="traditional-discount">$55.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">معوز يمني</div>
+                                <img src="https://i.postimg.cc/9F4XGq7N/moazz-4.jpg" alt="معوز يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">معوز يمني فاخر</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$65.99</span>
+                                    <span class="traditional-discount">$85.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الشيلان اليمنية -->
+        <section class="yemeni-category section">
+            <div class="container">
+                <div class="yemeni-category-header">
+                    <h2 class="yemeni-category-title">الشيلان اليمنية</h2>
+                    <p class="yemeni-category-description">استمتع بجمال الشيلان اليمنية التقليدية بألوانها الزاهية وتصاميمها الفريدة</p>
+                </div>
+
+                <div class="traditional-container">
+                    <div class="swiper traditional-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">شيلة يمنية</div>
+                                <img src="https://mamlakatsaba.com/wp-content/uploads/2024/05/IMG-20240421-WA0021.jpg" alt="شيلة يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">شيلة يمنية تقليدية</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$35.99</span>
+                                    <span class="traditional-discount">$48.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">شيلة يمنية</div>
+                                <img src="https://mamlakatsaba.com/wp-content/uploads/2024/05/0256e9df-eca3-4a02-8f7b-fc0796bd9f57-1-scaled.jpg" alt="شيلة يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">شيلة يمنية مطرزة</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$42.99</span>
+                                    <span class="traditional-discount">$58.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">شيلة يمنية</div>
+                                <img src="https://mamlakatsaba.com/wp-content/uploads/2024/05/65340cf1-0fd4-49b5-9b7b-5fba982a5eed-1-scaled.jpg" alt="شيلة يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">شيلة يمنية فاخرة</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$48.99</span>
+                                    <span class="traditional-discount">$65.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">شيلة يمنية</div>
+                                <img src="https://i.postimg.cc/3Jx8h5yB/shila-4.jpg" alt="شيلة يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">شيلة يمنية مطرزة بالذهب</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$75.99</span>
+                                    <span class="traditional-discount">$95.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الثوب اليمني -->
+        <section class="yemeni-category section">
+            <div class="container">
+                <div class="yemeni-category-header">
+                    <h2 class="yemeni-category-title">الثوب اليمني</h2>
+                    <p class="yemeni-category-description">الثوب اليمني الأصيل يجمع بين الأناقة والراحة في تصميمات تعكس عمق التراث اليمني</p>
+                </div>
+
+                <div class="traditional-container">
+                    <div class="swiper traditional-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">ثوب يمني</div>
+                                <img src="https://mamlakatsaba.com/wp-content/uploads/2025/01/b323b467-dc12-4fe6-a812-4a49f9011afa.jpg" alt="ثوب يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">ثوب يمني تقليدي</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$65.99</span>
+                                    <span class="traditional-discount">$85.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">ثوب يمني</div>
+                                <img src="https://theyemenihouse.com/cdn/shop/files/C9365FBE-F251-4A19-9DB2-B27F39D1A3F5_1024x1024.jpg?v=1736453417" alt="ثوب يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">ثوب يمني مطرز</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$79.99</span>
+                                    <span class="traditional-discount">$99.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">ثوب يمني</div>
+                                <img src="https://albaitalaraby.com/cdn/shop/files/photo_2024-02-23_14-10-36.jpg?v=1708716927" alt="ثوب يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">ثوب يمني فاخر</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$95.99</span>
+                                    <span class="traditional-discount">$120.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">ثوب يمني</div>
+                                <img src="https://i.postimg.cc/3Jx8h5yB/thobe-4.jpg" alt="ثوب يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">ثوب يمني للاحتفالات</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$110.99</span>
+                                    <span class="traditional-discount">$140.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الجنابي اليمنية -->
+        <section class="yemeni-category section">
+            <div class="container">
+                <div class="yemeni-category-header">
+                    <h2 class="yemeni-category-title">الجنابي اليمنية</h2>
+                    <p class="yemeni-category-description">الجنبية اليمنية رمز للفخر والأناقة، مصنوعة بدقة عالية تعكس براعة الصناعة اليمنية</p>
+                </div>
+
+                <div class="traditional-container">
+                    <div class="swiper traditional-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">جنبية يمنية</div>
+                                <img src="https://thobeyemeni.com/cdn/shop/files/Yemeni_Jambiya_12.png?v=1750155363&width=1100" alt="جنبية يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">جنبية يمنية تقليدية</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$120.99</span>
+                                    <span class="traditional-discount">$150.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">جنبية يمنية</div>
+                                <img src="https://theyemenihouse.com/cdn/shop/files/0CA246D8-897B-49C3-B27B-C02EDD3D83A6_1024x1024.jpg?v=1753467929" alt="جنبية يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">جنبية يمنية فاخرة</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$185.99</span>
+                                    <span class="traditional-discount">$220.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">جنبية يمنية</div>
+                                <img src="https://manasati30.com/wp-content/uploads/2019/04/%D8%AC%D9%86%D8%A7%D8%A8%D9%8A-%D8%B5%D9%8A%D9%81%D8%A7%D9%86%D9%8A-768x576.jpg" alt="جنبية يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">جنبية يمنية صيفانية</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$150.99</span>
+                                    <span class="traditional-discount">$180.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">جنبية يمنية</div>
+                                <img src="https://i.postimg.cc/3Jx8h5yB/jambiya-4.jpg" alt="جنبية يمنية" class="traditional-img">
+                                <h3 class="traditional-title-item">جنبية يمنية ملكية</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$250.99</span>
+                                    <span class="traditional-discount">$300.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الزي النسائي اليمني -->
+        <section class="yemeni-category section">
+            <div class="container">
+                <div class="yemeni-category-header">
+                    <h2 class="yemeni-category-title">الزي النسائي اليمني</h2>
+                    <p class="yemeni-category-description">مجموعة مميزة من الأزياء النسائية اليمنية التي تجمع بين الأصالة والأناقة العصرية</p>
+                </div>
+
+                <div class="traditional-container">
+                    <div class="swiper traditional-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">زي نسائي</div>
+                                <img src="https://mamlakatsaba.com/wp-content/uploads/2025/01/58353c9c-4eee-46c1-96e8-75ddbad3bfca.jpg" alt="زي نسائي يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">ثوب نسائي يمني</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$75.99</span>
+                                    <span class="traditional-discount">$95.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">زي نسائي</div>
+                                <img src="https://cdn.salla.sa/KDQqa/6e50c115-72c8-42ce-8728-55774f4b5922-562.890625x1000-gF7GgOP952WtrIgdYvyhaxdJWnfDNOXHxbENgsyp.jpg" alt="زي نسائي يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">فستان يمني مطرز</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$89.99</span>
+                                    <span class="traditional-discount">$110.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">زي نسائي</div>
+                                <img src="https://www.palestinianelegance.com/cdn/shop/files/Janna-Embroidered-Thoub-Palestinian-Elegance-221391675.jpg?v=1762234584&width=1000" alt="زي نسائي يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">ثوب يمني فاخر</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$110.99</span>
+                                    <span class="traditional-discount">$135.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+
+                            <div class="traditional-content swiper-slide">
+                                <div class="traditional-tag">زي نسائي</div>
+                                <img src="https://i.postimg.cc/3Jx8h5yB/women-4.jpg" alt="زي نسائي يمني" class="traditional-img">
+                                <h3 class="traditional-title-item">زي نسائي ملكي</h3>
+                                <span class="traditional-subtitle-item">تراث يمني</span>
+                                <div class="traditional-prices">
+                                    <span class="traditional-price">$150.99</span>
+                                    <span class="traditional-discount">$190.99</span>
+                                </div>
+                                <a href="details.html" class="button traditional-button"><i class="bx bx-cart-alt traditional-icon"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- خطوات الطلب -->
+        <section class="steps section container">
+            <div class="steps-bg">
+                <h2 class="section-title">كيفية طلب المنتجات <br> من E-Shopper</h2>
+
+                <div class="steps-container grid">
+                    <div class="steps-card">
+                        <div class="steps-card-number">01</div>
+                        <h3 class="steps-card-title">اختر المنتجات</h3>
+                        <p class="steps-card-description">لدينا عدة أنواع يمكنك الاختيار من بينها</p>
+                    </div>
+
+                    <div class="steps-card">
+                        <div class="steps-card-number">02</div>
+                        <h3 class="steps-card-title">اطلب المنتجات</h3>
+                        <p class="steps-card-description">بمجرد اكتمال طلبك، ننتقل إلى الخطوة التالية وهي الشحن</p>
+                    </div>
+
+                    <div class="steps-card">
+                        <div class="steps-card-number">03</div>
+                        <h3 class="steps-card-title">استلم طلبك</h3>
+                        <p class="steps-card-description">عملية التوصيل لدينا سهلة، تستلم الطلب مباشرة إلى منزلك</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- النشرة البريدية -->
+        <section class="newsletter section">
+            <div class="newsletter-container container">
+                <h2 class="section-title">النشرة البريدية</h2>
+                <p class="newsletter-description">ترويج للمنتجات الجديدة والعروض. مباشرة إلى بريدك الإلكتروني</p>
+
+                <form action="" class="newsletter-form">
+                    <input type="text" placeholder="أدخل بريدك الإلكتروني" class="newsletter-input">
+                    <button class="button">اشتراك</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- الفوتر -->
+    <footer class="footer section">
+        <div class="footer-container container grid">
+            <div class="footer-content">
+                <a href="#" class="footer-logo"><i class="bx bxs-shopping-bag footer-logo-icon"> E-Shopper</i></a>
+                <p class="footer-description">استمتع بأكبر تخفيضات <br> في حياتك</p>
+
+                <ul class="footer-social">
+                    <a href="#" class="footer-social-link"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="footer-social-link"><i class="bx bxl-instagram"></i></a>
+                    <a href="#" class="footer-social-link"><i class="bx bxl-twitter"></i></a>
+                </ul>
+            </div>
+
+            <div class="footer-content">
+                <h3 class="footer-title">حول</h3>
+
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">حولنا</a></li>
+                    <li><a href="#" class="footer-link">دعم العملاء</a></li>
+                    <li><a href="#" class="footer-link">مركز الدعم</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-content">
+                <h3 class="footer-title">خدماتنا</h3>
+
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">المتجر</a></li>
+                    <li><a href="#" class="footer-link">التخفيضات</a></li>
+                    <li><a href="#" class="footer-link">طرق الشحن</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-content">
+                <h3 class="footer-title">شركتنا</h3>
+
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">تسجيل</a></li>
+                    <li><a href="#" class="footer-link">اتصل بنا</a></li>
+                    <li><a href="#" class="footer-link">حولنا</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <span class="footer-copy">&#169; <a href="">E-Shopper</a>. جميع الحقوق محفوظة</span>
+        
+        <!-- إضافة اسم المطور -->
+        <div class="developer">
+            تم التطوير بواسطة <a href="#">عبد الوهاب عبد الواحد الريمي</a>
+        </div>
+    </footer>
+
+    <!-- زر التمرير للأعلى -->
+    <a href="#" class="scrollUp" id="scroll-up"><i class="bx bx-up-arrow-alt scrollup-icon"></i></a>
+
+    <!-- السكريبتات -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // تهيئة جميع الوظائف عند تحميل DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            initSwiperSliders();
+            initHeaderScroll();
+            initCartFunctionality();
+            initLoginFunctionality();
+            initScrollUp();
+            initNavigation();
+            initProductInteractions();
+            initNewsletter();
+            initCartManagement();
+            initThemeToggle();
+            initTraditionalItems();
+            initWelcomeLogo();
+        });
+
+        // Swiper JS Home
+        function initSwiperSliders() {
+            // Home Swiper
+            var homeSwiper = new Swiper(".home-swiper", {
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                speed: 800,
+                effect: 'slide',
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                    dynamicBullets: true,
+                }
+            });
+
+            // New Arrivals Swiper
+            var newSwiper = new Swiper(".new-swiper", {
+                spaceBetween: 16,
+                centeredSlides: false,
+                slidesPerView: 1,
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                speed: 600,
+                breakpoints: {
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    776: {
+                        slidesPerView: 3,
+                    },
+                    992: {
+                        slidesPerView: 4,
+                    },
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+            });
+
+            // Traditional Yemeni Swipers
+            var traditionalSwipers = document.querySelectorAll('.traditional-swiper');
+            traditionalSwipers.forEach(function(swiperEl) {
+                new Swiper(swiperEl, {
+                    spaceBetween: 16,
+                    centeredSlides: false,
+                    slidesPerView: 1,
+                    loop: true,
+                    autoplay: {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                    },
+                    speed: 600,
+                    breakpoints: {
+                        576: {
+                            slidesPerView: 2,
+                        },
+                        776: {
+                            slidesPerView: 3,
+                        },
+                        992: {
+                            slidesPerView: 4,
+                        },
+                    },
+                    pagination: {
+                        el: swiperEl.querySelector('.swiper-pagination'),
+                        clickable: true,
+                    },
+                });
+            });
+        }
+
+        // Scroll Header
+        function initHeaderScroll() {
+            function scrollHeader() {
+                const header = document.getElementById('header');
+                if (this.scrollY >= 50) {
+                    header.classList.add('scroll-header');
+                } else {
+                    header.classList.remove('scroll-header');
+                }
+            }
+            window.addEventListener('scroll', scrollHeader);
+        }
+
+        // Cart Functionality
+        function initCartFunctionality() {
+            const cart = document.getElementById('cart');
+            const cartShop = document.getElementById('cart-shop');
+            const cartClose = document.getElementById('cart-close');
+
+            if (cartShop) {
+                cartShop.addEventListener("click", () => {
+                    cart.classList.add('show-cart');
+                    updateCartBadge();
+                });
+            }
+            
+            if (cartClose) {
+                cartClose.addEventListener("click", () => {
+                    cart.classList.remove('show-cart');
+                });
+            }
+        }
+
+        // Login Functionality
+        function initLoginFunctionality() {
+            const login = document.getElementById('login');
+            const loginButton = document.getElementById('login-button');
+            const loginClose = document.getElementById('login-close');
+
+            if (loginButton) {
+                loginButton.addEventListener("click", () => {
+                    login.classList.add('show-login');
+                });
+            }
+            
+            if (loginClose) {
+                loginClose.addEventListener("click", () => {
+                    login.classList.remove('show-login');
+                });
+            }
+        }
+
+        // Scroll Up Functionality
+        function initScrollUp() {
+            function scrollUp() {
+                const scrollUp = document.getElementById('scroll-up');
+                if (this.scrollY >= 350) {
+                    scrollUp.classList.add('show-scroll');
+                } else {
+                    scrollUp.classList.remove('show-scroll');
+                }
+            }
+            window.addEventListener("scroll", scrollUp);
+
+            // Add click event to scroll to top
+            const scrollUpBtn = document.getElementById('scroll-up');
+            if (scrollUpBtn) {
+                scrollUpBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        }
+
+        // Navigation Menu
+        function initNavigation() {
+            const navMenu = document.getElementById('nav-menu');
+            const navToggle = document.getElementById('nav-toggle');
+            const navClose = document.getElementById('nav-close');
+
+            if (navToggle) {
+                navToggle.addEventListener("click", () => {
+                    navMenu.classList.add('show-menu');
+                });
+            }
+            
+            if (navClose) {
+                navClose.addEventListener("click", () => {
+                    navMenu.classList.remove('show-menu');
+                });
+            }
+
+            // Close menu when clicking on a link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('show-menu');
+                });
+            });
+        }
+
+        // Product Interactions
+        function initProductInteractions() {
+            // Add to cart functionality for product buttons
+            const addToCartButtons = document.querySelectorAll('.new-button');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productCard = this.closest('.new-content');
+                    addProductToCart(productCard);
+                });
+            });
+        }
+
+        // Traditional Yemeni Items Functionality
+        function initTraditionalItems() {
+            // Add to cart functionality for traditional items
+            const traditionalButtons = document.querySelectorAll('.traditional-button');
+            traditionalButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const item = this.closest('.traditional-content');
+                    addTraditionalItemToCart(item);
+                });
+            });
+        }
+
+        function addTraditionalItemToCart(item) {
+            const itemImg = item.querySelector('.traditional-img').src;
+            const itemName = item.querySelector('.traditional-title-item').textContent;
+            const itemPrice = item.querySelector('.traditional-price').textContent;
+
+            // Create new cart item
+            createCartItem(itemImg, itemName, itemPrice);
+            
+            updateCartTotals();
+            showNotification(`${itemName} تمت إضافته إلى السلة!`, 'success');
+        }
+
+        // Cart Management
+        function initCartManagement() {
+            // Quantity controls
+            const quantityMinus = document.querySelectorAll('.cart-amount-box .bx-minus');
+            const quantityPlus = document.querySelectorAll('.cart-amount-box .bx-plus');
+            const trashButtons = document.querySelectorAll('.cart-amount-trash');
+
+            quantityMinus.forEach(button => {
+                button.addEventListener('click', function() {
+                    const amountElement = this.closest('.cart-amount-content').querySelector('.cart-amount-number');
+                    let amount = parseInt(amountElement.textContent);
+                    if (amount > 1) {
+                        amountElement.textContent = amount - 1;
+                        updateCartTotals();
+                    }
+                });
+            });
+
+            quantityPlus.forEach(button => {
+                button.addEventListener('click', function() {
+                    const amountElement = this.closest('.cart-amount-content').querySelector('.cart-amount-number');
+                    let amount = parseInt(amountElement.textContent);
+                    amountElement.textContent = amount + 1;
+                    updateCartTotals();
+                });
+            });
+
+            trashButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-card');
+                    cartItem.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => {
+                        cartItem.remove();
+                        updateCartTotals();
+                    }, 300);
+                });
+            });
+        }
+
+        // Theme Toggle
+        function initThemeToggle() {
+            const themeButton = document.getElementById('theme-toggle');
+            const darkTheme = 'dark-theme';
+            const iconTheme = 'bx-sun';
+
+            // Previously selected topic (if user selected)
+            const selectedTheme = localStorage.getItem('selected-theme');
+            const selectedIcon = localStorage.getItem('selected-icon');
+
+            // We obtain the current theme that the interface has by validating the dark-theme class
+            const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light';
+            const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'bx-sun' : 'bx-moon';
+
+            // We validate if the user previously chose a topic
+            if (selectedTheme) {
+                // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
+                document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme);
+                themeButton.classList[selectedIcon === 'bx-sun' ? 'add' : 'remove'](iconTheme);
+            }
+
+            // Activate / deactivate the theme manually with the button
+            themeButton.addEventListener('click', () => {
+                // Add or remove the dark / icon theme
+                document.body.classList.toggle(darkTheme);
+                themeButton.classList.toggle(iconTheme);
+                // We save the theme and the current icon that the user chose
+                localStorage.setItem('selected-theme', getCurrentTheme());
+                localStorage.setItem('selected-icon', getCurrentIcon());
+            });
+        }
+
+        function addProductToCart(productCard) {
+            const productImg = productCard.querySelector('.new-img').src;
+            const productName = productCard.querySelector('.new-title').textContent;
+            const productPrice = productCard.querySelector('.new-price').textContent;
+
+            // Create new cart item
+            createCartItem(productImg, productName, productPrice);
+            
+            updateCartTotals();
+            showNotification(`${productName} تمت إضافته إلى السلة!`, 'success');
+        }
+
+        function createCartItem(imgSrc, name, price) {
+            const cartContainer = document.querySelector('.cart-container');
+            
+            const cartItem = document.createElement('article');
+            cartItem.className = 'cart-card';
+            cartItem.innerHTML = `
+                <div class="cart-box">
+                    <img src="${imgSrc}" alt="${name}" class="cart-img">
+                </div>
+                <div class="cart-details">
+                    <h3 class="cart-title">${name}</h3>
+                    <span class="cart-price">${price}</span>
+                    <div class="cart-amount">
+                        <div class="cart-amount-content">
+                            <span class="cart-amount-box"><i class='bx bx-minus'></i></span>
+                            <span class="cart-amount-number">1</span>
+                            <span class="cart-amount-box"><i class='bx bx-plus'></i></span>
+                        </div>
+                        <i class='bx bx-trash-alt cart-amount-trash'></i>
+                    </div>
+                </div>
+            `;
+            
+            cartContainer.appendChild(cartItem);
+            
+            // Re-initialize event listeners for the new item
+            initCartManagement();
+        }
+
+        function updateCartTotals() {
+            const cartItems = document.querySelectorAll('.cart-card');
+            let totalItems = 0;
+            let totalPrice = 0;
+            
+            cartItems.forEach(item => {
+                const quantity = parseInt(item.querySelector('.cart-amount-number').textContent);
+                const priceText = item.querySelector('.cart-price').textContent;
+                const price = parseFloat(priceText.replace('$', ''));
+                
+                totalItems += quantity;
+                totalPrice += quantity * price;
+            });
+            
+            const cartPricesItems = document.querySelectorAll('.cart-prices-item, .cart-prices-total');
+            if (cartPricesItems.length >= 2) {
+                cartPricesItems[0].textContent = `${totalItems} ${totalItems === 1 ? 'منتج' : 'منتجات'}`;
+                cartPricesItems[1].textContent = `$${totalPrice.toFixed(2)}`;
+            }
+            
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const cartItems = document.querySelectorAll('.cart-card');
+            let totalItems = 0;
+            
+            cartItems.forEach(item => {
+                totalItems += parseInt(item.querySelector('.cart-amount-number').textContent);
+            });
+            
+            // Update cart badge
+            const cartBadge = document.querySelector('.cart-badge');
+            if (cartBadge) {
+                if (totalItems > 0) {
+                    cartBadge.textContent = totalItems > 9 ? '9+' : totalItems;
+                    cartBadge.style.display = 'flex';
+                } else {
+                    cartBadge.style.display = 'none';
+                }
+            }
+        }
+
+        // Newsletter Functionality
+        function initNewsletter() {
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('.newsletter-input');
+                    const email = emailInput.value.trim();
+                    
+                    if (validateEmail(email)) {
+                        showNotification('تم الاشتراك في النشرة البريدية بنجاح!', 'success');
+                        emailInput.value = '';
+                    } else {
+                        showNotification('يرجى إدخال بريد إلكتروني صحيح', 'error');
+                    }
+                });
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        // Notification System
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => {
+                notification.remove();
+            });
+            
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span class="notification-message">${message}</span>
+                <button class="notification-close"><i class='bx bx-x'></i></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, 5000);
+            
+            // Close button event
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            });
+        }
+
+        // Welcome Logo Functionality
+        function initWelcomeLogo() {
+            const welcomeLogo = document.getElementById('welcome-logo');
+            
+            // Show welcome logo on page load
+            welcomeLogo.classList.add('active');
+            
+            // Hide welcome logo after 3 seconds
+            setTimeout(() => {
+                welcomeLogo.classList.remove('active');
+            }, 3000);
+            
+            // Optional: Show welcome logo when clicking on developer name
+            const developerLink = document.querySelector('.developer a');
+            if (developerLink) {
+                developerLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    welcomeLogo.classList.add('active');
+                    setTimeout(() => {
+                        welcomeLogo.classList.remove('active');
+                    }, 3000);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
